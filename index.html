@@ -715,13 +715,16 @@ def retrieve(query_text, top_k=5, score_threshold=0.0):
       Three friction points shape everything above. First, <strong>Semantic vs. Literal Resolution</strong>: the system consistently prioritizes structural and color layout over conceptual logic, so a query like "falling cows" or "hidden second image" gets matched on spatial/geometric proxies rather than the actual idea. Second, <strong>Entity Knowledge Gaps</strong>: named figures ("Taylor Swift," "Shah Rukh Khan") and named places ("Munnar") don't exist as concepts SigLIP can ground against this corpus — it pivots to atmosphere or gesture instead of failing gracefully. Third, <strong>Out-of-Distribution Sensitivity</strong>: for anything absent from the archive (cars, cows, celebrities), similarity scores drop to near-zero or even negative, and the dominant remaining signal is often just color, which can drag in visually unrelated but same-hued assets. A smaller, practical limitation: SigLIP's raw cosine similarity range for this corpus is narrow enough (~0.32 spread) that small numeric differences in the "Thresh" values above correspond to fairly large changes in result count — the slider is sensitive in a way that isn't obvious from the number alone.
     </div>
 
-    <div class="section-title">Sources & References</div>
-    <div class="meta-grid" style="grid-template-columns: 1fr; border-top: none; padding-top: 0;">
-      <div>• Zhai, X., Mustafa, B., Kolesnikov, A., & Beyer, L. (2023). <em>Sigmoid Loss for Language Image Pre-Training.</em> Google DeepMind.</div>
-      <div>• Radford, A. et al. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision.</em> OpenAI.</div>
-      <div>• McInnes, L., Healy, J., & Melville, J. (2018). <em>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction.</em></div>
-      <div>• Schwind, M. & Kopic, C. (2026). <em>Seeing Machines Assignment Framework.</em> TH Nürnberg, Fakultät Design.</div>
-    </div>
+  <div class="section-title">Sources & References</div>
+  <div class="meta-grid" style="grid-template-columns: 1fr; border-top: none; padding-top: 0;">
+  <div>• Zhai, X., Mustafa, B., Kolesnikov, A., & Beyer, L. (2023). <em>Sigmoid Loss for Language Image Pre-Training.</em> Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV). Google DeepMind.</div>
+  <div>• Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., Krueger, G., & Sutskever, I. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision.</em> Proceedings of the 38th International Conference on Machine Learning (ICML). OpenAI.</div>
+  <div>• McInnes, L., Healy, J., & Melville, J. (2018). <em>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction.</em> arXiv:1802.03426.</div>
+  <div>• Abid, A., Abdalla, A., Abid, A., Khan, D., Alfozan, A., & Zou, J. (2019). <em>Gradio: Hassle-Free Sharing and Testing of ML Models in the Wild.</em> arXiv:1906.02569.</div>
+  <div>• Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., et al. (2020). <em>Transformers: State-of-the-Art Natural Language Processing.</em> Proceedings of EMNLP: System Demonstrations. Hugging Face.</div>
+  <div>• Manning, C. D., Raghavan, P., & Schütze, H. (2008). <em>Introduction to Information Retrieval</em> (Ch. 6: Scoring, Term Weighting, and the Vector Space Model). Cambridge University Press.</div>
+
+</div>
 
     <footer>
       Published Research Log • Saloni Ved • Master of Arts in Design for Digital Futures • TH Nürnberg • July 2026<br>
