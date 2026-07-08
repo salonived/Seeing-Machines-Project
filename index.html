@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --forge-blue: #1a2a40; /* Master Brand Color 1 */
-    --cobalt-blue: #0047ab; /* Master Brand Color 2 */
+    --forge-blue: #1a2a40;
+    --cobalt-blue: #0047ab;
     --bg-light: #f7f9fc;
     --card-bg: #ffffff;
     --text-main: #1c2530;
@@ -88,6 +87,22 @@
   }
 
   .meta-label { color: var(--forge-blue); font-weight: 600; }
+
+  .resource-strip {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px dotted var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .resource-strip a {
+    color: var(--cobalt-blue);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid var(--cobalt-blue);
+  }
+  .resource-strip a:hover { color: var(--forge-blue); border-color: var(--forge-blue); }
 
   .teaser-box {
     margin: 40px 0;
@@ -250,6 +265,7 @@
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.75rem;
     margin-bottom: 16px;
+    flex-wrap: wrap;
   }
 
   .badge {
@@ -312,6 +328,17 @@
     margin: 20px 0;
   }
 
+  .note-strip {
+    background: #fff8e6;
+    border: 1px solid #f0dca0;
+    color: #6b5311;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+
   footer {
     margin-top: 80px;
     padding-top: 30px;
@@ -330,59 +357,68 @@
       <span class="plate-tag">Research Project Documentation</span>
       <h1>Seeing Machines: A Multimodal Archive Companion</h1>
       <div class="authors">By Saloni Ved</div>
-      
+
       <div class="meta-grid">
         <div><span class="meta-label">Course:</span> CompSci for Designers 2</div>
         <div><span class="meta-label">Semester:</span> Summer Semester 2026</div>
         <div><span class="meta-label">Chosen Level:</span> Level 1 (The Finder)</div>
-        <div><span class="meta-label">Model Engine:</span> SigLIP / CLIP Multimodal</div>
+        <div><span class="meta-label">Model Engine:</span> SigLIP (google/siglip-base-patch16-224)</div>
+      </div>
+
+      <div class="resource-strip">
+        <span class="meta-label">Colab Notebook:</span>
+        <a href="https://colab.research.google.com/drive/1Dy-yfIBRh5WSf00hjFPHpB8eJiI552EH?usp=sharing" target="_blank" rel="noopener">
+          Open "Seeing Machines" in Google Colab
+        </a>
       </div>
     </header>
 
     <div class="teaser-box">
-      <img src="images/Prompt1.png" alt="Gradio Interface Search Portal View">
+      <img src="images/Image_Corpus.png" alt="Grid of 20 representative images from the personal image corpus">
       <div class="tagline">"Tracking the systematic gaps between text-query modifiers and visual embedding spaces."</div>
     </div>
 
     <div class="section-title">Abstract</div>
     <div class="abstract-text">
-      This project explores how a multimodal vision-language model interprets a highly specific, personal archive of creative work. Using a custom search interface built with Gradio, I tested a semantic image retrieval system to understand exactly where and why the model's visual interpretation diverges from human intent. By querying my own 71-image portfolio with carefully constructed prompts, I observed systemic patterns in how the model prioritizes certain visual features over others—and, critically, where it fails to understand complex stylistic and compositional reasoning.
+      Every image in this project's corpus is something I made — a poster, a brand identity, an illustration, a sketch. That gave me an unusually direct way to test a semantic image search engine: instead of asking "did the model retrieve the objectively correct image," I could ask "does the model see my own work the way I do?" I built a SigLIP-based retrieval pipeline over 71 pieces from my design and illustration practice, wired it into a Gradio search interface, and then spent most of my time on the more interesting question underneath: not whether search worked, but where and why it quietly disagreed with me about what a query meant. That disagreement — documented here as a retrieval atlas — turned out to be the real deliverable.
     </div>
 
     <div class="section-title">Motivation & Corpus Statement</div>
     <div class="corpus-block">
-      <p>The corpus consists of 71 images selected from my personal practice as an illustrator and graphic designer. It includes portfolio work, brand identity assets, poster layouts, and digital illustrations across various styles and color palettes.</p>
-      
-      <p>Because every image in this archive is a piece of work I created myself, I know the exact intent behind it: the specific design brief, the deliberate color choices, the conceptual reasoning. This creates a unique testing ground—I am not comparing the model to an external ground truth, but rather to my own documented creative intention. This grounds the project in a deeply personal epistemology: the question becomes not "is the model right?" but rather "where does the model's understanding of my visual language systematically diverge from my own?"</p>
+      <p><strong>What it is.</strong> The corpus is 71 images pulled from my own practice as an illustrator and brand/graphic designer: portfolio case studies, poster and event graphics, packaging illustration, social media ad concepts, personal paintings, and a handful of phone screenshots documenting live work (an exhibition install, a pop-up event, app UI mockups).</p>
+
+      <p><strong>Why this corpus.</strong> I didn't want to test the model against a dataset I had no stake in. Because I know the intent behind every single image — the brief, the reference, the color decision I fought with a client over — I can tell the difference between the model being "wrong" in a boring, technical sense and the model surfacing something genuinely revealing about how it reads design language versus how I read it. That's a much sharper test than checking retrieval against a public benchmark.</p>
+
+      <p><strong>How I curated it.</strong> I pulled from three sources: my finished portfolio (branding, packaging, ad concepts — around half the set), personal illustration and painting work not made for a client, and a small set of in-the-wild documentation shots (exhibitions, pop-ups, app screens) to add some non-illustrated, "real-world" texture to the corpus. I deliberately did not curate for stylistic consistency — the mix of flat vector, painterly, photographic, and UI screenshots is intentional, because a corpus that's visually uniform wouldn't expose much about how SigLIP separates style from content.</p>
     </div>
 
     <div class="section-title">Approach & Pipeline</div>
     <div class="pipeline-description">
-      The system runs on a retrieval pipeline that maps both text and images into a shared mathematical space:
+      The system maps both images and text into one shared embedding space, then ranks the corpus by closeness to a query:
     </div>
-    
+
     <div class="pipeline-svg">
       <svg width="600" height="100" viewBox="0 0 600 100">
         <text x="60" y="15" font-family="IBM Plex Mono" font-size="10" fill="#ffffff" text-anchor="middle">71 Images</text>
         <text x="205" y="15" font-family="IBM Plex Mono" font-size="10" fill="#ffffff" text-anchor="middle">SigLIP Vision</text>
         <text x="355" y="15" font-family="IBM Plex Mono" font-size="10" fill="#ffffff" text-anchor="middle">SigLIP Text</text>
         <text x="515" y="15" font-family="IBM Plex Mono" font-size="10" fill="#ffffff" text-anchor="middle">Cosine</text>
-        
+
         <rect x="10" y="30" width="100" height="40" rx="4" fill="#0047ab"/>
         <text x="60" y="58" font-family="IBM Plex Mono" font-size="11" fill="#ffffff" text-anchor="middle">Portfolio</text>
         <path d="M 110 50 L 150 50" stroke="#ffffff" stroke-width="1.5"/>
-        
+
         <rect x="150" y="30" width="110" height="40" rx="4" fill="#ffffff"/>
         <text x="205" y="58" font-family="IBM Plex Mono" font-size="11" fill="#1a2a40" text-anchor="middle">Encoder</text>
         <path d="M 260 50 L 300 50" stroke="#ffffff" stroke-width="1.5"/>
-        
+
         <rect x="300" y="30" width="110" height="40" rx="4" fill="#ffffff"/>
         <text x="355" y="58" font-family="IBM Plex Mono" font-size="11" fill="#1a2a40" text-anchor="middle">Encoder</text>
         <path d="M 410 50 L 450 50" stroke="#ffffff" stroke-width="1.5"/>
-        
+
         <rect x="450" y="30" width="130" height="40" rx="4" fill="#0047ab"/>
         <text x="515" y="58" font-family="IBM Plex Mono" font-size="11" fill="#ffffff" text-anchor="middle">Similarity</text>
-        
+
         <text x="205" y="90" font-family="IBM Plex Mono" font-size="9" fill="#1a2a40" text-anchor="middle">Visual Embedding</text>
         <text x="355" y="90" font-family="IBM Plex Mono" font-size="9" fill="#1a2a40" text-anchor="middle">Text Embedding</text>
         <text x="515" y="90" font-family="IBM Plex Mono" font-size="9" fill="#1a2a40" text-anchor="middle">Top-k Results</text>
@@ -390,57 +426,69 @@
     </div>
 
     <div class="pipeline-description">
-      <strong>Image Embedding Generation:</strong> The 71 original portfolio images are processed through a vision-language model (SigLIP framework), converting their visual features into high-dimensional vectors that encode color, composition, typography, and semantic content.
+      <strong>Image Embedding Generation:</strong> All 71 images are passed once through SigLIP's vision tower, producing a fixed vector per image that's cached so the notebook never needs to re-embed the corpus on a fresh run.
     </div>
 
     <div class="pipeline-description">
-      <strong>Text Embedding Generation:</strong> When a user inputs a search query into the web interface, the system translates the text string into a matching text vector within the same embedding space, encoding the semantic meaning of the query language.
+      <strong>Text Embedding Generation:</strong> A search query typed into Gradio is passed through SigLIP's text tower into the same embedding space as the images — no separate CLIP model, no re-alignment step.
     </div>
 
     <div class="pipeline-description">
-      <strong>Similarity Metrics:</strong> The retrieval engine calculates the closeness (cosine similarity) between the text vector and all cached image vectors, returning ranked results above a confidence threshold determined by the user.
+      <strong>Similarity Metrics:</strong> Retrieval uses raw cosine similarity between the query vector and every cached image vector. One real debugging finding shapes this section: my first version thresholded against SigLIP's logit-scaled scores (roughly 3–8) instead of the raw cosine similarities (which sit in a much tighter band, roughly −0.18 to 0.14 for this corpus). Once fixed, the Gradio gallery went blank at any threshold above ~0.1, because SigLIP's sigmoid-loss training produces cosine scores far lower than the 0–1 range CLIP-style intuition expects.
     </div>
 
     <div class="pipeline-description">
-      <strong>Interface Control:</strong> A custom Gradio interface displays the top matching images in a clean grid, allowing manual adjustment of the similarity threshold and maximum number of results to explore the retrieval frontier.
+      <strong>Interface Control:</strong> The Gradio interface exposes top-k and a similarity threshold slider (range −0.15 to 0.7, default near 0). Because the corpus is small, top-k does most of the practical filtering; the threshold is mainly useful for demonstrating how aggressively a stricter cutoff collapses results.
     </div>
 
     <pre>
-def lookup_engine(text_input, total_k, score_minimum):
-    text_vector = model.encode_text(clip.tokenize([text_input])).to(device)
-    text_vector /= text_vector.norm(dim=-1, keepdim=True)
-    
-    match_scores = (image_matrix @ text_vector.T).squeeze(1).tolist()
-    sorted_pairs = sorted(zip(all_filenames, match_scores), key=lambda x: x[1], reverse=True)
-    
-    return [item for item in sorted_pairs if item[1] >= score_minimum][:total_k]
+def retrieve(query_text, top_k=5, score_threshold=0.0):
+    inputs = processor(text=[query_text], return_tensors="pt", padding="max_length")
+    with torch.no_grad():
+        text_features = model.get_text_features(**inputs)
+    text_features = text_features / text_features.norm(dim=-1, keepdim=True)
+
+    # raw cosine similarity — NOT the logit-scaled score SigLIP returns by default
+    sims = (image_embeddings @ text_features.T).squeeze(1).cpu().tolist()
+
+    ranked = sorted(zip(image_paths, sims), key=lambda x: x[1], reverse=True)
+    filtered = [item for item in ranked if item[1] >= score_threshold]
+    return filtered[:top_k]
     </pre>
 
-    <div class="section-title">Latent Space Mapping</div>
-    <p style="font-family: 'Newsreader', serif; font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">Below is the 2D projection of the model's combined embedding space, showing how my portfolio images cluster semantically and where queries locate themselves within that topology.</p>
+    <div class="section-title">Embedding Space Mapping</div>
+    <p style="font-family: 'Newsreader', serif; font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">
+      The plot below is a 2D projection (UMAP, cosine metric) of the corpus's SigLIP embeddings, with the 13 atlas queries overlaid in the same space and connected by a line to their actual top-ranked matches. Teal points are portfolio images; pink points are text queries.
+    </p>
     <div class="visual-block-large">
-      <img src="images/Prompt9.png" alt="UMAP Embedding Space Plot — Corpus vs Atlas Queries">
-      <div class="visual-caption">Figure 1: Joint UMAP projection showing semantic distance and cross-modal mapping edges.</div>
+      <img src="images/umap.png" alt="UMAP projection of the SigLIP embedding space, showing portfolio images and atlas queries with retrieval edges">
+      <div class="visual-caption">Figure 1: UMAP projection of corpus + atlas queries, edges drawn to each query's retrieved matches.</div>
+    </div>
+    <div class="pipeline-description">
+      A few things are visible directly in the topology. The two "vibrant pink lipstick ad" and "minimalist lipstick" queries land almost on top of each other at the upper right, both pulling from the same tight cluster of beauty/cosmetics branding work — which is exactly the noun-dominance behavior described in Case 02 below: the model groups by subject before it separates by style. The two "negative space logo" queries (Cases 11 and 13, asked on different days) sit right next to each other on the far right and draw from the same small cluster of high-contrast brand marks, which is a nice visual confirmation that the failure is systematic rather than a one-off roll of the dice. Meanwhile "a blue car" and "Taylor Swift eating an apple" sit off on their own at the far left, isolated from any dense cluster — visually confirming that these queries have no real anchor in the corpus and are matching on weak, diffuse signal rather than any coherent concept.
     </div>
 
 
     <div class="section-title">The Retrieval Atlas (13 Case Studies)</div>
+    <div class="note-strip">
+      Note: SigLIP's raw cosine similarities for this corpus range roughly from −0.18 to 0.14 (not the 0–1 range CLIP-style models produce). Threshold and similarity values below are taken directly from real notebook runs.
+    </div>
     <div class="atlas-grid">
-      
+
       <div class="atlas-card">
         <div>
           <div class="query-num">Case 01 <span class="type-tag target">Success Mode</span></div>
           <div class="query-text">"A vibrant pink social media advertisement for lipsticks featuring bold, high-contrast modern typography."</div>
           <div class="metrics">
             <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.08</span>
+            <span class="badge blue-accent">Thresh: -0.03</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt1.png" alt="Query 1 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>High Semantic Alignment.</strong> The model strongly connects explicit color keywords ("vibrant pink") and functional context ("advertisement") with text-heavy social media graphics in my portfolio, reliably surfacing the correct brand assets.
+          <strong>High Semantic Alignment.</strong> Explicit color language ("vibrant pink") and functional context ("advertisement") reliably pull in the correct beauty-brand assets (PORTFOLIO-37, -26, -10, -27, plus the Glamzy identity sheet), even though the raw cosine scores here sit under 0.1 — a reminder that "high confidence" for SigLIP looks nothing like CLIP's 0–1 scale.
         </div>
       </div>
 
@@ -450,14 +498,14 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-text">"A minimalist flat vector illustration of a lipstick tube against a solid purple background."</div>
           <div class="metrics">
             <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.07</span>
+            <span class="badge blue-accent">Thresh: 0.07 → 0.02</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt2.png" alt="Query 2 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Noun Dominance Bias.</strong> The system isolates lipstick-related assets purely based on the core object noun, entirely ignoring the contradictory style modifiers "minimalist" and "flat." It returns ornate, textured pieces instead.
+          <strong>Noun Dominance Bias.</strong> At threshold 0.07 only PORTFOLIO-37 clears the bar (sim: 0.078) — the same ornate, saturated lipstick ad from Case 01, not a minimalist flat piece. Dropping the threshold to 0.02 just adds more of the same beauty-branding cluster (PORTFOLIO-26, -24, -39). The model locks onto the object noun "lipstick" and never separates out the contradictory style modifiers "minimalist" or "flat."
         </div>
       </div>
 
@@ -466,15 +514,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 03 <span class="type-tag target">Success Mode</span></div>
           <div class="query-text">"Hand-painted Indian truck art with vibrant colors and ornate, heavy-weighted typography."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.08</span>
+            <span class="badge">Top-k: 4</span>
+            <span class="badge blue-accent">Thresh: 0.06</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt%203.png" alt="Query 3 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Texture & Saturated Weighting.</strong> The model successfully matches the complex, heavy-weighted typographic layouts and high-density, high-saturation color distributions rather than matching literal subject matter (no actual truck art exists in my corpus).
+          <strong>Texture & Saturated Weighting.</strong> Top match is a rickshaw/"Need for Speed" illustration (0-03.png, sim: 0.070) — no literal truck art exists in the corpus, but the model still finds the closest thing: heavy-weighted display type over a dense, saturated illustration. It's matching visual grammar, not the literal subject.
         </div>
       </div>
 
@@ -483,15 +531,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 04 <span class="type-tag failure">Failure Mode</span></div>
           <div class="query-text">"Taylor Swift eating an apple."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.00</span>
+            <span class="badge">Top-k: 2-4</span>
+            <span class="badge blue-accent">Thresh: 0.00 → -0.07</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt4.png" alt="Query 4 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Absolute Subject Absence.</strong> Because neither the specific identity nor the action exists in the archive, the pipeline defaults to low-confidence, arbitrary assets with near-zero semantic overlap, filling the grid with random portfolio pieces.
+          <strong>Absolute Subject Absence.</strong> At threshold 0.0, only two images clear the bar at all — a self-portrait illustration (sim: 0.011) and an unrelated cat illustration (sim: 0.008). Both scores sit barely above zero, essentially noise. Neither the identity nor the action exists anywhere in the archive, and the model has no graceful way to say "I don't have this" — it just returns whatever is least-dissimilar.
         </div>
       </div>
 
@@ -500,15 +548,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 05 <span class="type-tag failure">Failure Mode</span></div>
           <div class="query-text">"A blue car."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.10</span>
+            <span class="badge">Top-k: 2-4</span>
+            <span class="badge blue-accent">Thresh: -0.07 → 0.02</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt5.png" alt="Query 5 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Color-Channel Over-Indexing.</strong> With no vehicles present in the corpus, the vision encoder relies completely on color matching, filling the grid with brand identity sheets dominated by cobalt and navy blues, ignoring the implicit request for vehicular form.
+          <strong>Color-Channel Over-Indexing.</strong> The one image in the corpus that actually contains a car (an F1 photo, IMG_6119) does rank first, but a rickshaw illustration (0-03.png, sim: 0.026) ranks second purely on shared blue tones — with no other vehicles in the corpus to disambiguate, hue alone becomes a strong enough signal to nearly tie with an actual car.
         </div>
       </div>
 
@@ -517,15 +565,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 06 <span class="type-tag failure">Failure Mode</span></div>
           <div class="query-text">"Whimsical white cows falling from the sky like rain into a lush green field."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.02</span>
+            <span class="badge">Top-k: 3</span>
+            <span class="badge blue-accent">Thresh: -0.15</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt6.png" alt="Query 6 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Narrative Composition Collapse.</strong> The model fails to parse complex surreal actions and scattered arrangements, instead returning blocky layout designs with very low mathematical confidence, demonstrating complete semantic incoherence.
+          <strong>Narrative Composition Collapse.</strong> Even at the lowest possible threshold, the top result (sim: 0.008) is a skydiving poster — the model latches onto "falling" as a body-in-motion-through-air concept and ignores the surreal, whimsical framing entirely. Complex narrative composition doesn't survive the embedding.
         </div>
       </div>
 
@@ -534,15 +582,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 07 <span class="type-tag target">Success Mode</span></div>
           <div class="query-text">"Shah Rukh Khan performing a dance routine on a neon-lit stage."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.01</span>
+            <span class="badge">Top-k: 3</span>
+            <span class="badge blue-accent">Thresh: 0.03</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt7.png" alt="Query 7 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Stylistic Proxy Dominance.</strong> Lacking the specific figure, the engine pivots to the atmospheric modifier "neon-lit," correctly surfacing dark design layouts containing vibrant, saturated accent colors that evoke that aesthetic mood.
+          <strong>Stylistic Proxy Dominance.</strong> Interestingly, the top hit (sim: 0.031) is actually an illustration of a man on a rooftop with arms outstretched — likely drawing on pose and gesture ("performing," open arms) rather than "neon-lit stage," which the corpus doesn't strongly contain. Lacking the specific figure, the model pivots to the nearest available gesture and composition.
         </div>
       </div>
 
@@ -551,15 +599,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 08 <span class="type-tag target">Success Mode</span></div>
           <div class="query-text">"A serene morning at a lush tea garden in Munnar featuring rolling green hills and hand-drawn farmers."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.06</span>
+            <span class="badge">Top-k: 3-4</span>
+            <span class="badge blue-accent">Thresh: 0.00 → 0.03</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt8.png" alt="Query 8 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Organic Hue Clustering.</strong> The pipeline maps this query near illustration assets containing heavy green tones and fluid line art, though it overlooks the specific narrative detail (the actual place "Munnar" and agricultural context).
+          <strong>Organic Hue Clustering.</strong> A hand-painted coffee/tea field illustration ranks first with real margin over the rest of the set, correctly picking up on rolling green hills and warm, illustrated agricultural scenery — though it's matching on "tea/coffee field" generally rather than the specific place name "Munnar," which the model has no way to ground.
         </div>
       </div>
 
@@ -568,15 +616,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 09 <span class="type-tag style-check">Success Mode</span></div>
           <div class="query-text">"A 1920s Bauhaus-style poster with rigid geometric shapes and a strict primary color palette."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.15</span>
+            <span class="badge">Top-k: 2</span>
+            <span class="badge blue-accent">Thresh: -0.02</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt9.1.png" alt="Query 9 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Structural Grid Alignment.</strong> A strong success mode. The embedding space easily connects "rigid geometric shapes" and "primary color palette" with corporate design grids and minimalist brand systems in the archive.
+          <strong>Structural Grid Alignment.</strong> Top match (PORTFOLIO-13, sim: 0.046) is a set of rigid, primary-color card layouts — a genuine hit on "geometric" and "primary palette," even though "Bauhaus" and "1920s" as historical/stylistic labels aren't something the model can reason about directly. It's responding to grid structure and color, not art-history vocabulary.
         </div>
       </div>
 
@@ -585,15 +633,15 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 10 <span class="type-tag failure">Failure Mode</span></div>
           <div class="query-text">"A surreal dreamscape featuring dozens of watchful blue eyes hidden within a dark, bioluminescent jungle."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.05</span>
+            <span class="badge">Top-k: 4</span>
+            <span class="badge blue-accent">Thresh: 0.07</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt10.png" alt="Query 10 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Macro Over Micro Details.</strong> The encoder prioritizes the overall color mood and organic texture of the "dark jungle" over micro-components like "watchful blue eyes." High-level atmosphere dominates, fine details vanish.
+          <strong>Macro Over Micro Details.</strong> The top result is an album-cover illustration of a jungle scene with a single visible eye — a real partial hit on "dark jungle" atmosphere, but "dozens of watchful eyes" as a specific, repeated micro-motif gets flattened into general dark-green-jungle mood. Overall scene color and texture dominate over the fine repeated detail.
         </div>
       </div>
 
@@ -602,7 +650,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 11 <span class="type-tag failure">Failure Mode</span></div>
           <div class="query-text">"A logo that uses negative space to hide a second image."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
+            <span class="badge">Top-k: 4</span>
             <span class="badge blue-accent">Thresh: 0.08</span>
           </div>
           <div class="shot-box">
@@ -610,7 +658,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Conceptual Blindness.</strong> The system cannot mathematically comprehend high-level visual metaphors like "negative space" or hidden double meanings, instead returning basic, high-contrast brand marks with zero semantic understanding.
+          <strong>Conceptual Blindness.</strong> Top match is the "b/end" wordmark (sim: 0.082), which does contain a literal negative-space cut in the "l" — so this one is arguably a partial success by coincidence. But the model can't actually reason about the concept "hides a second image"; it's responding to the mark's clean, high-contrast geometry, not the visual trick.
         </div>
       </div>
 
@@ -619,32 +667,32 @@ def lookup_engine(text_input, total_k, score_minimum):
           <div class="query-num">Case 12 <span class="type-tag target">Success Mode</span></div>
           <div class="query-text">"Handwritten typography that feels rushed and imperfect."</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.06</span>
+            <span class="badge">Top-k: 10</span>
+            <span class="badge blue-accent">Thresh: -0.05</span>
           </div>
           <div class="shot-box">
             <img src="images/Prompt8.1.png" alt="Query 12 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Micro-Texture Sensitivity.</strong> When similarity thresholds are dropped slightly, the pipeline accurately surfaces raw sketches and expressive posters featuring imperfect, organic handwriting and raw line quality.
+          <strong>Micro-Texture Sensitivity.</strong> Widening top-k to 10 at a permissive threshold surfaces "Friday Mistakes" and other loose brush-lettering pieces alongside cleaner brand type — a real, if noisy, signal for "rushed and imperfect" handwriting texture, distinct from the polished type in Cases 1–2.
         </div>
       </div>
 
       <div class="atlas-card">
         <div>
           <div class="query-num">Case 13 <span class="type-tag failure">Failure Mode</span></div>
-          <div class="query-text">"A logo that uses negative space to hide a second image."</div>
+          <div class="query-text">"A logo that uses negative space to hide a second image." (repeated)</div>
           <div class="metrics">
-            <span class="badge">Top-k: 5</span>
-            <span class="badge blue-accent">Thresh: 0.09</span>
+            <span class="badge">Top-k: 4</span>
+            <span class="badge blue-accent">Thresh: -0.15</span>
           </div>
           <div class="shot-box">
             <img src="images/Query13.png" alt="Query 13 Match Grid">
           </div>
         </div>
         <div class="analysis">
-          <strong>Consistency Validation.</strong> Repeated query demonstrates consistency in retrieval patterns, validating the model's stable behavior across identical prompts. Reinforces that the conceptual gap is systematic, not stochastic noise.
+          <strong>Consistency Validation.</strong> Re-running the identical query at a much looser threshold still returns the same small cluster of brand marks (b/end, Glamzy, Reset, Colin's, sim range ~0.04–0.08) in nearly the same order. The conceptual gap in Case 11 is a stable property of the embedding space, not sampling noise — visible directly as two tightly-linked query points in the UMAP plot above.
         </div>
       </div>
 
@@ -652,33 +700,34 @@ def lookup_engine(text_input, total_k, score_minimum):
 
     <div class="section-title">Critical Systemic Synthesis</div>
     <div class="verdict-strip">
-      Comparing these 13 evaluation scenarios reveals that the system functions primarily as a mapper of visual grammar rather than an indexer of objects. It excels when prompts utilize structural design language ('flat vector', 'typography'), leveraging SigLIP’s training on web-scale design data to align queries with the technical execution of the work. However, it fails—or 'mis-sees'—when asked to reason about entity knowledge or abstract metaphors. The system defaults to 'color-channel over-indexing' and 'compositional bias' when it lacks specific semantic anchors, forcing disparate images to align based on shared hues or structural layouts rather than intent.
+      Across these 13 runs, the system behaves as a mapper of visual grammar rather than an indexer of objects or concepts. It's strongest when a query's key words are things design actually encodes — color, density, type weight, composition ("vibrant pink," "rigid geometric shapes," "rushed handwriting"). It's weakest exactly where language carries meaning the corpus can't express visually: named public figures, precise place names, narrative causality ("falling"), or high-level visual metaphors like negative space. In those gaps, the model doesn't fail gracefully — it substitutes the nearest available proxy (a shared hue, a similar gesture, a comparable composition) and reports that substitution with the same quiet confidence as a real match.
     </div>
 
     <div class="section-title">Project Reflection & Dead Ends</div>
     <div class="abstract-text" style="font-size: 1.1rem;">
-      This project confirms that SigLIP functions not as an indexer of objects, but as a mapper of visual grammar. The retrieval pipeline demonstrates high efficacy when prompts leverage artistic vocabulary ('flat vector', 'typography', 'macro'); here, the model effectively maps design briefs to visual output. However, the system is prone to 'mis-seeing' when semantic expectations collide with corpus constraints. Success modes rely on stylistic alignment—mapping prompts to the 'vibe' of the work—whereas failure modes expose the model's tendency to hallucinate presence based on color frequency or compositional proximity when it cannot find a subject match. Ultimately, the pipeline serves better as an associative explorer of my portfolio's latent aesthetic space than as a strict literal content indexer.
+      The most useful moment in this project wasn't a success case — it was the threshold bug. My retrieval function was filtering against SigLIP's logit-scaled output instead of raw cosine similarity, which meant my threshold slider had never actually been doing anything the whole time I thought I was tuning it. Fixing it broke the interface in a new way: the Gradio gallery went completely blank, because I was still expecting CLIP-style 0–1 similarity scores, and SigLIP's real range for this corpus turned out to sit closer to −0.18 to 0.14. That forced me to actually run a histogram over the corpus instead of guessing at a "reasonable-sounding" threshold, which is a small methodological habit I'm keeping for future retrieval work.
+      <br><br>
+      The atlas cases taught me more about the limits of the model than about my own images. I went in expecting the failures to be embarrassing — and some are, the "negative space logo" query never gets anywhere close to the actual concept, twice. But other failures are more interesting than the successes: "a blue car" nearly retrieving a rickshaw illustration on hue alone tells me more about how SigLIP weights color against form than any of the clean hits do. If I extended this project, the obvious next step is Level 2 — adding captioning so the system can at least articulate why it thinks two things are similar, instead of leaving me to reverse-engineer it from a UMAP plot.
     </div>
 
     <div class="section-title">Limitations</div>
     <div class="abstract-text" style="font-size: 1.1rem; margin-bottom: 20px;">
-      The model’s performance is constrained by three primary friction points. First, <strong>Semantic vs. Literal Resolution</strong>: The system exhibits a strong 'Composition Bias,' where it prioritizes structural layouts (e.g., vertical color blocks) over conceptual logic (e.g., 'falling cows'), leading to false positive retrievals based on spatial geometry. Second, <strong>Entity Knowledge Gaps</strong>: Queries involving specific figures ('Taylor Swift', 'Shah Rukh Khan') reveal the model’s lack of external encyclopedic depth, forcing it to pivot to atmospheric proxies rather than failing gracefully. Third, <strong>Out-of-Distribution Sensitivity</strong>: When queries contain terms absent from the archive (e.g., 'car'), the model exhibits 'color-channel over-indexing,' where the dominant token—such as a specific hue—drags the retrieval toward unrelated assets. Finally, technical file downsampling within the vector model reduces fine texture definition, causing the system to over-rely on macro-level color distributions.
+      Three friction points shape everything above. First, <strong>Semantic vs. Literal Resolution</strong>: the system consistently prioritizes structural and color layout over conceptual logic, so a query like "falling cows" or "hidden second image" gets matched on spatial/geometric proxies rather than the actual idea. Second, <strong>Entity Knowledge Gaps</strong>: named figures ("Taylor Swift," "Shah Rukh Khan") and named places ("Munnar") don't exist as concepts SigLIP can ground against this corpus — it pivots to atmosphere or gesture instead of failing gracefully. Third, <strong>Out-of-Distribution Sensitivity</strong>: for anything absent from the archive (cars, cows, celebrities), similarity scores drop to near-zero or even negative, and the dominant remaining signal is often just color, which can drag in visually unrelated but same-hued assets. A smaller, practical limitation: SigLIP's raw cosine similarity range for this corpus is narrow enough (~0.32 spread) that small numeric differences in the "Thresh" values above correspond to fairly large changes in result count — the slider is sensitive in a way that isn't obvious from the number alone.
     </div>
 
     <div class="section-title">Sources & References</div>
     <div class="meta-grid" style="grid-template-columns: 1fr; border-top: none; padding-top: 0;">
-      <div>• Zhai, X., Mustafa, B., Kolesnikov, A., & Beyer, L. (2023). <em>Sigmoid Loss for Language Image Pre-Training.</em> OpenAI & DeepMind.</div>
+      <div>• Zhai, X., Mustafa, B., Kolesnikov, A., & Beyer, L. (2023). <em>Sigmoid Loss for Language Image Pre-Training.</em> Google DeepMind.</div>
       <div>• Radford, A. et al. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision.</em> OpenAI.</div>
       <div>• McInnes, L., Healy, J., & Melville, J. (2018). <em>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction.</em></div>
       <div>• Schwind, M. & Kopic, C. (2026). <em>Seeing Machines Assignment Framework.</em> TH Nürnberg, Fakultät Design.</div>
     </div>
 
     <footer>
-      Published Research Log • Saloni Ved • Master of Arts in Design for Digital Futures • TH Nürnberg • July 2026
+      Published Research Log • Saloni Ved • Master of Arts in Design for Digital Futures • TH Nürnberg • July 2026<br>
+      Colab notebook: <a href="https://colab.research.google.com/drive/1Dy-yfIBRh5WSf00hjFPHpB8eJiI552EH?usp=sharing" target="_blank" rel="noopener" style="color:var(--cobalt-blue);">colab.research.google.com/drive/1Dy-yfIBRh5WSf00hjFPHpB8eJiI552EH</a>
     </footer>
   </div>
 
 </body>
 </html>
-
-```
