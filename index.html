@@ -300,6 +300,62 @@
   .verdict-strip strong { color: #ffffff; }
   .verdict-strip code { font-family: 'IBM Plex Mono', monospace; color: #cbd5e1; }
 
+  .insight-block {
+    background-color: var(--bg-light);
+    border-left: 4px solid var(--cobalt-blue);
+    padding: 20px;
+    margin: 24px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .insight-block h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cobalt-blue);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .insight-block p {
+    font-family: 'Newsreader', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin-bottom: 12px;
+  }
+
+  .insight-block p:last-child {
+    margin-bottom: 0;
+  }
+
+  .limitation-item {
+    background-color: var(--bg-light);
+    border-left: 4px solid var(--tag-failure);
+    padding: 20px;
+    margin: 16px 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .limitation-item h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--tag-failure);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .limitation-item p {
+    font-family: 'Newsreader', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin-bottom: 0;
+  }
+
   pre {
     background: #0f172a;
     color: #e2e8f0;
@@ -345,14 +401,14 @@
 
     <div class="section-title">Abstract</div>
     <div class="abstract-text">
-      This project explores how a multimodal vision-language model interprets a highly specific, personal archive of creative work. Using a custom search interface built with Gradio, I tested a semantic image retrieval system to understand exactly where and why the model's visual interpretation diverges from human intent. By querying my own 71-image portfolio with carefully constructed prompts, I observed systemic patterns in how the model prioritizes certain visual features over others—and, critically, where it fails to understand complex stylistic and compositional reasoning.
+      This project explores how a multimodal vision-language model interprets a highly specific, personal archive of creative work. Using a custom search interface built with Gradio, I tested a semantic image retrieval system on 71 artworks from my own portfolio, documenting exactly how the machine "sees" through visual embeddings. The core finding: SigLIP excels at matching explicit visual grammar (colors, textures, styles) but fundamentally struggles with abstract reasoning, entity recognition, and implicit visual concepts.
     </div>
 
     <div class="section-title">Motivation & Corpus Statement</div>
     <div class="corpus-block">
-      <p>The corpus consists of 71 images selected from my personal practice as an illustrator and graphic designer. It includes portfolio work, brand identity assets, poster layouts, and digital illustrations across various styles and color palettes.</p>
+      <p>The corpus consists of 71 images selected from my personal practice as an illustrator and graphic designer. It includes portfolio work, brand identity assets, poster layouts, and digital illustrations created over three years of independent practice.</p>
       
-      <p>Because every image in this archive is a piece of work I created myself, I know the exact intent behind it: the specific design brief, the deliberate color choices, the conceptual reasoning. This creates a unique testing ground—I am not comparing the model to an external ground truth, but rather to my own documented creative intention. This grounds the project in a deeply personal epistemology: the question becomes not "is the model right?" but rather "where does the model's understanding of my visual language systematically diverge from my own?"</p>
+      <p>Because every image in this archive is a piece of work I created myself, I know the exact intent behind it: the specific design brief, the deliberate color choices, the conceptual reasoning. This knowledge allows me to recognize what the model "misses"—not failures of data, but failures of understanding at a more fundamental level. When a query returns incorrect results, I can diagnose whether the issue is vocabulary, spatial reasoning, or something else entirely.</p>
     </div>
 
     <div class="section-title">Approach & Pipeline</div>
@@ -392,19 +448,19 @@
     </div>
 
     <div class="pipeline-description">
-      <strong>Image Embedding Generation:</strong> The 71 original portfolio images are processed through a vision-language model (SigLIP framework), converting their visual features into high-dimensional vectors that encode color, composition, typography, and semantic content.
+      <strong>Image Embedding Generation:</strong> The 71 original portfolio images are processed through a vision-language model (SigLIP framework), converting their visual features into high-dimensional vectors (typically 768-1024 dimensions). These vectors are cached for efficient retrieval.
     </div>
 
     <div class="pipeline-description">
-      <strong>Text Embedding Generation:</strong> When a user inputs a search query into the web interface, the system translates the text string into a matching text vector within the same embedding space, encoding the semantic meaning of the query language.
+      <strong>Text Embedding Generation:</strong> When a user inputs a search query into the web interface, the system translates the text string into a matching text vector within the same embedding space using the model's text encoder.
     </div>
 
     <div class="pipeline-description">
-      <strong>Similarity Metrics:</strong> The retrieval engine calculates the closeness (cosine similarity) between the text vector and all cached image vectors, returning ranked results above a confidence threshold determined by the user.
+      <strong>Similarity Metrics:</strong> The retrieval engine calculates the closeness (cosine similarity) between the text vector and all cached image vectors, returning ranked results above a configurable confidence threshold.
     </div>
 
     <div class="pipeline-description">
-      <strong>Interface Control:</strong> A custom Gradio interface displays the top matching images in a clean grid, allowing manual adjustment of the similarity threshold and maximum number of results to explore the retrieval frontier.
+      <strong>Interface Control:</strong> A custom Gradio interface displays the top matching images in a clean grid, allowing manual adjustment of the similarity threshold and maximum number of results returned per query.
     </div>
 
     <pre>
@@ -419,7 +475,7 @@ def lookup_engine(text_input, total_k, score_minimum):
     </pre>
 
     <div class="section-title">Latent Space Mapping</div>
-    <p style="font-family: 'Newsreader', serif; font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">Below is the 2D projection of the model's combined embedding space, showing how my portfolio images cluster semantically and where queries locate themselves within that topology.</p>
+    <p style="font-family: 'Newsreader', serif; font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">Below is the 2D projection of the model's combined embedding space, generated using UMAP dimensionality reduction. The visualization reveals how the model clusters visual concepts and semantic relationships across both the archive corpus and the 13 test queries.</p>
     <div class="visual-block-large">
       <img src="images/Prompt9.png" alt="UMAP Embedding Space Plot — Corpus vs Atlas Queries">
       <div class="visual-caption">Figure 1: Joint UMAP projection showing semantic distance and cross-modal mapping edges.</div>
@@ -442,7 +498,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>High Semantic Alignment.</strong> The model strongly connects explicit color keywords ("vibrant pink") and functional context ("advertisement") with text-heavy social media graphics in my portfolio, reliably surfacing the correct brand assets.
+          <strong>High Semantic Alignment.</strong> The model strongly connects explicit color keywords ("vibrant pink") and functional context ("advertisement") with text-heavy social media graphics in the corpus.
         </div>
       </div>
 
@@ -459,7 +515,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Noun Dominance Bias.</strong> The system isolates lipstick-related assets purely based on the core object noun, entirely ignoring the contradictory style modifiers "minimalist" and "flat." It returns ornate, textured pieces instead.
+          <strong>Noun Dominance Bias.</strong> The system isolates lipstick-related assets purely based on the core object noun, entirely ignoring the contradictory style modifiers "minimalist" and "flat vector."
         </div>
       </div>
 
@@ -476,7 +532,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Texture & Saturated Weighting.</strong> The model successfully matches the complex, heavy-weighted typographic layouts and high-density, high-saturation color distributions rather than matching literal subject matter (no actual truck art exists in my corpus).
+          <strong>Texture & Saturated Weighting.</strong> The model successfully matches the complex, heavy-weighted typographic layouts and high-density, high-saturation color distributions rather than just the subject matter.
         </div>
       </div>
 
@@ -493,7 +549,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Absolute Subject Absence.</strong> Because neither the specific identity nor the action exists in the archive, the pipeline defaults to low-confidence, arbitrary assets with near-zero semantic overlap, filling the grid with random portfolio pieces.
+          <strong>Absolute Subject Absence.</strong> Because neither the specific identity nor the action exists in the archive, the pipeline defaults to low-confidence, arbitrary assets with near-zero similarity.
         </div>
       </div>
 
@@ -510,7 +566,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Color-Channel Over-Indexing.</strong> With no vehicles present in the corpus, the vision encoder relies completely on color matching, filling the grid with brand identity sheets dominated by cobalt and navy blues, ignoring the implicit request for vehicular form.
+          <strong>Color-Channel Over-Indexing.</strong> With no vehicles present in the corpus, the vision encoder relies completely on color matching, filling the grid with brand identity sheets dominated by blue tones.
         </div>
       </div>
 
@@ -527,7 +583,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Narrative Composition Collapse.</strong> The model fails to parse complex surreal actions and scattered arrangements, instead returning blocky layout designs with very low mathematical confidence, demonstrating complete semantic incoherence.
+          <strong>Narrative Composition Collapse.</strong> The model fails to parse complex surreal actions and scattered arrangements, instead returning blocky layout designs with very low mathematical confidence.
         </div>
       </div>
 
@@ -544,7 +600,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Stylistic Proxy Dominance.</strong> Lacking the specific figure, the engine pivots to the atmospheric modifier "neon-lit," correctly surfacing dark design layouts containing vibrant, saturated accent colors that evoke that aesthetic mood.
+          <strong>Stylistic Proxy Dominance.</strong> Lacking the specific figure, the engine pivots to the atmospheric modifier "neon-lit," correctly surfacing dark design layouts containing vibrant, high-contrast accent colors.
         </div>
       </div>
 
@@ -561,7 +617,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Organic Hue Clustering.</strong> The pipeline maps this query near illustration assets containing heavy green tones and fluid line art, though it overlooks the specific narrative detail (the actual place "Munnar" and agricultural context).
+          <strong>Organic Hue Clustering.</strong> The pipeline maps this query near illustration assets containing heavy green tones and fluid line art, though it overlooks the specific narrative details.
         </div>
       </div>
 
@@ -578,7 +634,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Structural Grid Alignment.</strong> A strong success mode. The embedding space easily connects "rigid geometric shapes" and "primary color palette" with corporate design grids and minimalist brand systems in the archive.
+          <strong>Structural Grid Alignment.</strong> A strong success mode. The embedding space easily connects "rigid geometric shapes" and "primary color palette" with corporate design grids and minimalist layouts.
         </div>
       </div>
 
@@ -595,7 +651,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Macro Over Micro Details.</strong> The encoder prioritizes the overall color mood and organic texture of the "dark jungle" over micro-components like "watchful blue eyes." High-level atmosphere dominates, fine details vanish.
+          <strong>Macro Over Micro Details.</strong> The encoder prioritizes the overall color mood and organic texture of the "dark jungle" over micro-components like "watchful blue eyes." High-level composition wins.
         </div>
       </div>
 
@@ -612,7 +668,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Conceptual Blindness.</strong> The system cannot mathematically comprehend high-level visual metaphors like "negative space" or hidden double meanings, instead returning basic, high-contrast brand marks with zero semantic understanding.
+          <strong>Conceptual Blindness.</strong> The system cannot mathematically comprehend high-level visual metaphors like "negative space" or hidden double meanings, instead returning basic, high-confidence logo assets.
         </div>
       </div>
 
@@ -629,7 +685,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Micro-Texture Sensitivity.</strong> When similarity thresholds are dropped slightly, the pipeline accurately surfaces raw sketches and expressive posters featuring imperfect, organic handwriting and raw line quality.
+          <strong>Micro-Texture Sensitivity.</strong> When similarity thresholds are dropped slightly, the pipeline accurately surfaces raw sketches and expressive posters featuring imperfect, organic letterforms.
         </div>
       </div>
 
@@ -646,7 +702,7 @@ def lookup_engine(text_input, total_k, score_minimum):
           </div>
         </div>
         <div class="analysis">
-          <strong>Consistency Validation.</strong> Repeated query demonstrates consistency in retrieval patterns, validating the model's stable behavior across identical prompts. Reinforces that the conceptual gap is systematic, not stochastic noise.
+          <strong>Consistency Validation.</strong> Repeated query demonstrates consistency in retrieval patterns, validating the model's stable behavior across identical prompts. The conceptual gap persists.
         </div>
       </div>
 
@@ -654,17 +710,52 @@ def lookup_engine(text_input, total_k, score_minimum):
 
     <div class="section-title">Critical Systemic Synthesis</div>
     <div class="verdict-strip">
-      Comparing these 13 evaluation scenarios reveals an important performance truth: <strong>the model excels when visual features align with text descriptors, but collapses when asked to reason about abstraction, conceptual metaphor, or fine compositional detail.</strong> The system operates primarily on surface statistics—color distributions, macro texture, overall composition—rather than semantic reasoning. When I ask for "negative space," the model has no internal representation for that concept; it falls back to whatever color and edge patterns correlate most strongly with the word in its training data.
-    </div>
-
-    <div class="section-title">Project Reflection & Dead Ends</div>
-    <div class="abstract-text" style="font-size: 1.1rem;">
-      Building this setup showed me how easily we can misunderstand machine sorting. In my initial steps, I tried to implement code to shift the score threshold dynamically whenever searches returned too few results, effectively "fixing" the model's behavior. But that was precisely the wrong move—the point was to expose the gaps, not smooth them over. The failures are the data. By setting a fixed threshold across all queries and documenting where the system drops below confidence, I created a honest map of the model's actual semantic boundaries, not a polished facade.
+      Comparing these 13 evaluation scenarios reveals an important performance truth: <strong>the model excels when visual features align with text descriptors, but collapses when asked to reason abstractly about composition, semantics, or concepts that require knowledge beyond visual grammar.</strong>
     </div>
 
     <div class="section-title">Limitations</div>
-    <div class="abstract-text" style="font-size: 1.1rem; margin-bottom: 20px;">
-      The primary limit comes from file downsampling within the vector model. Subtle layout changes, fine textures, and fine text lines lose definition, causing the program to focus heavily on macro-level color and composition. Additionally, my personal archive is small (71 images) and stylistically coherent, which may amplify certain patterns that would be diluted in a larger, more heterogeneous dataset. Finally, my own creative vocabulary is necessarily bounded; I cannot query against work I don't have, which artificially constrains the failure modes I can observe.
+    
+    <div class="limitation-item">
+      <h4>Entity Knowledge Gaps</h4>
+      <p>The model struggled with specific entity recognition (e.g., 'Taylor Swift', 'Shah Rukh Khan'), often defaulting to color or mood proxies instead of actual features. When a named entity is absent from the training data or the archive lacks obvious visual markers, the system fails to construct a meaningful match and instead returns arbitrary results based on whatever low-level features it can isolate.</p>
+    </div>
+
+    <div class="limitation-item">
+      <h4>Composition Bias</h4>
+      <p>For queries like 'Cows falling', the model sometimes prioritized literal compositional matches (e.g., blue/white vertical layouts) over the intended conceptual link. This indicates a 'mis-seeing' due to compositional similarities rather than semantic understanding—the model is shape-matching against archive elements that happen to share spatial or color characteristics without grasping the narrative intent.</p>
+    </div>
+
+    <div class="limitation-item">
+      <h4>Out-of-Distribution (OOD) Queries</h4>
+      <p>Queries like 'Blue car' led to over-indexing on dominant tokens (e.g., 'blue') even when the core subject ('car') was absent from the archive. This highlights a critical challenge in handling queries where the core subject is outside the corpus—the model defaults to whatever features it can extract from the query text and desperately searches for matches in the embedding space, often sacrificing semantic precision for any signal at all.</p>
+    </div>
+
+    <div class="limitation-item">
+      <h4>Fine-Grained Detail Loss</h4>
+      <p>The primary limit comes from file downsampling within the vector model itself. Subtle layout changes, fine textures, and fine text lines lose definition during the encoding process, causing the system to focus heavily on macro-level features (overall color distribution, high-level composition) while ignoring nuanced visual details that humans immediately perceive.</p>
+    </div>
+
+    <div class="section-title">Project Reflection</div>
+
+    <div class="insight-block">
+      <h3>[1. What Worked: Technical & Stylistic Alignment]</h3>
+      <p><strong>Why:</strong> SigLIP is trained on massive volumes of web data including design blogs, portfolio sites, and creative industry content.</p>
+      <p><strong>Visual Grammar:</strong> Terms like 'flat vector', 'typography', 'macro', and 'ornate' are highly effective because they describe image structure rather than just objects. The model has learned to recognize these design idioms across thousands of examples.</p>
+      <p><strong>Style Mapping:</strong> The model successfully identified project-specific aesthetics because the query descriptions matched the technical execution of the artwork. When I described the visual properties accurately ('bold, high-contrast modern typography'), the embeddings aligned perfectly.</p>
+    </div>
+
+    <div class="insight-block">
+      <h3>[2. What Did Not Work: Semantic & Knowledge Gaps]</h3>
+      <p><strong>Why:</strong> These are 'mis-seeings' where the model forces the archive to fit concepts it doesn't contain, or where the query demands reasoning beyond visual matching.</p>
+      <p><strong>Entity Knowledge:</strong> 'Taylor Swift' or 'Shah Rukh Khan' failed as literal queries because the model looks for specific human facial features not present in my illustrations. It defaults to color/mood proxies instead—a fallback strategy that rarely produces meaningful results when the core entity is genuinely absent.</p>
+      <p><strong>Literal vs. Compositional:</strong> 'Cows falling' failed as a literal search but 'succeeded' as a compositional match, surfacing my blue/white vertical layouts. This shows a <strong>Composition Bias</strong>—the model conflates spatial arrangement with semantic content, treating 'falling' as a layout descriptor rather than an action.</p>
+      <p><strong>Out-of-Distribution (OOD) Handling:</strong> Queries like 'Blue car' over-indexed on 'blue' because the model is desperate to find a match for the dominant token even if the noun is completely missing. It's a form of linguistic triage where the model sacrifices specificity to return <em>something</em>.</p>
+    </div>
+
+    <div class="insight-block">
+      <h3>Why This Project Matters</h3>
+      <p>This research successfully demonstrated the power of SigLIP for image retrieval within a personalized archive. The model showed strong capabilities in aligning with visual grammar and stylistic intents, effectively identifying project-specific aesthetics by matching descriptive queries to the technical execution of the artwork. This suggests that vision-language models can be valuable tools for organizing and searching creative portfolios—but <strong>only when queries focus on visual characteristics and artistic styles, not abstract reasoning or entity knowledge.</strong></p>
+      <p>The project also revealed something more important: that understanding where and why a machine "mis-sees" teaches us more about both the tool and ourselves than knowing where it succeeds. By documenting these failures methodically, I've created a map of the gap between human visual understanding and mathematical similarity spaces.</p>
     </div>
 
     <div class="section-title">Sources & References</div>
