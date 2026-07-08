@@ -313,23 +313,23 @@
     </header>
 
     <div class="teaser-box">
-      <img src="images/gradio_interface.jpg" alt="Gradio Interface Search Portal View">
+      <img src="gradio_interface.jpg" alt="Gradio Interface Search Portal View">
       <div class="tagline">"Tracking the systematic gaps between text-query modifiers and visual embedding spaces."</div>
     </div>
 
     <div class="section-title">Abstract</div>
     <div class="abstract-text">
-      This study explores how a visual-language search model interprets a personal dataset. Using a search portal constructed with Gradio, I evaluated how shifting similarity thresholds altered the cross-modal alignment profiles of returned files. The results demonstrate how literal token semantics often pull embedding matching focus away from layout structures and design motifs. This documentation traces those systematic operations, capturing where human intent and machine computations align or reveal errors.
+      This study explores how a visual-language search model interprets a personal dataset. Using a search portal constructed with Gradio, I evaluated how shifting similarity thresholds altered the cr[...]
     </div>
 
     <div class="section-title">Motivation & Corpus Statement</div>
     <div class="corpus-block">
       <strong>My Personal Corpus (71 Images):</strong><br>
-      My corpus contains 71 original images from my creative practice as an illustrator and branding designer, spanning portfolio work, poster designs, and sketched illustrations created over several years. Because I generated every single asset myself, I possess complete context regarding the specific design briefs, style flags, color choices, and composition grids intended. This intimate knowledge acts as a rigorous baseline to evaluate machine performance, enabling me to immediately detect when a retrieval match occurs due to surface-level pixel distributions rather than genuine conceptual relationships.
+      My corpus contains 71 original images from my creative practice as an illustrator and branding designer, spanning portfolio work, poster designs, and sketched illustrations created over several [...]
     </div>
 
     <div class="section-title">Approach & Setup Pipeline</div>
-    <p>The code extracts high-dimensional visual vectors from static image files. When an active query string is submitted, the system computes a matching text embedding and calculates nearest neighbors using normalized cosine similarity scores.</p>
+    <p>The code extracts high-dimensional visual vectors from static image files. When an active query string is submitted, the system computes a matching text embedding and calculates nearest neighbo[...]
     
     <div class="pipeline-svg">
       <svg width="600" height="80" viewBox="0 0 600 80">
@@ -362,9 +362,9 @@ def lookup_engine(text_input, total_k, score_minimum):
     </pre>
 
     <div class="section-title">Latent Space Mapping</div>
-    <p>Below is the 2D projection of the model's combined embedding space generated using UMAP. It visualizes the positioning of all 71 portfolio images alongside the 15 evaluation atlas queries, revealing semantic clusters, structural gaps, and proximity alignments.</p>
+    <p>Below is the 2D projection of the model's combined embedding space generated using UMAP. It visualizes the positioning of all 71 portfolio images alongside the 15 evaluation atlas queries, reve[...]
     <div class="visual-block-large">
-      <img src="images/umap_projection.png" alt="UMAP Embedding Space Plot — Corpus vs Atlas Queries">
+      <img src="umap_projection.png" alt="UMAP Embedding Space Plot — Corpus vs Atlas Queries">
       <div class="visual-caption">Figure 1: Joint UMAP projection showing semantic distance and cross-modal mapping edges.</div>
     </div>
 
@@ -381,7 +381,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.07</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_01.png" alt="Query 1 Match Grid">
+            <img src="Query 1.png" alt="Query 1 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -398,7 +398,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: -0.05</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_02.png" alt="Query 2 Match Grid">
+            <img src="Query 2.png" alt="Query 2 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -415,7 +415,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.00</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_03.png" alt="Query 3 Match Grid">
+            <img src="Query3.png" alt="Query 3 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -432,7 +432,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.10</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_04.png" alt="Query 4 Match Grid">
+            <img src="Query4.png" alt="Query 4 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -449,7 +449,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.02</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_05.png" alt="Query 5 Match Grid">
+            <img src="Query5.png" alt="Query 5 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -466,7 +466,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.01</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_06.png" alt="Query 6 Match Grid">
+            <img src="Query6.png" alt="Query 6 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -483,7 +483,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.05</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_07.png" alt="Query 7 Match Grid">
+            <img src="Query 7.png" alt="Query 7 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -500,7 +500,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.08</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_08.png" alt="Query 8 Match Grid">
+            <img src="Query8.png" alt="Query 8 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -517,7 +517,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.06</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_09.png" alt="Query 9 Match Grid">
+            <img src="Query9.png" alt="Query 9 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -534,7 +534,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.04</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_10.png" alt="Query 10 Match Grid">
+            <img src="Query10.png" alt="Query 10 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -551,7 +551,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.05</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_11.png" alt="Query 11 Match Grid">
+            <img src="Query11.png" alt="Query 11 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -568,7 +568,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.12</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_12.png" alt="Query 12 Match Grid">
+            <img src="Query12.png" alt="Query 12 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -585,7 +585,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.15</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_13.png" alt="Query 13 Match Grid">
+            <img src="Query13.png" alt="Query 13 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -602,7 +602,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: -0.02</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_14.png" alt="Query 14 Match Grid">
+            <img src="query3.1.png" alt="Query 14 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -619,7 +619,7 @@ def lookup_engine(text_input, total_k, score_minimum):
             <span class="badge blue-accent">Thresh: 0.09</span>
           </div>
           <div class="shot-box">
-            <img src="images/query_15.png" alt="Query 15 Match Grid">
+            <img src="query13.2.png" alt="Query 15 Match Grid">
           </div>
         </div>
         <div class="analysis">
@@ -631,17 +631,17 @@ def lookup_engine(text_input, total_k, score_minimum):
 
     <div class="section-title">Critical Systemic Synthesis</div>
     <div class="verdict-strip">
-      Comparing these 15 evaluation scenarios reveals an important performance truth: even when a specific portfolio item surfaces as the top match across completely different prompts, its absolute similarity score stays low (often hovering around <code>0.078</code>). This proves the engine is not confident it found an exact match; it is simply rendering the least distant point available in a closed space where a perfect match does not exist.
+      Comparing these 15 evaluation scenarios reveals an important performance truth: even when a specific portfolio item surfaces as the top match across completely different prompts, its absolute si[...]
     </div>
 
     <div class="section-title">Project Reflection & Dead Ends</div>
     <div class="abstract-text" style="font-size: 1.1rem;">
-      Building this setup showed me how easily we can misunderstand machine sorting. In my initial steps, I tried to implement code to shift the score threshold dynamically whenever searches returned empty grids. This caused bugs where non-relevant design sheets crowded the layout view. Realizing that human alignment adjustments matter more than forcing neat automated matches changed how I approach data spaces.
+      Building this setup showed me how easily we can misunderstand machine sorting. In my initial steps, I tried to implement code to shift the score threshold dynamically whenever searches returned [...]
     </div>
 
     <div class="section-title">Limitations</div>
     <div class="abstract-text" style="font-size: 1.1rem; margin-bottom: 20px;">
-      The primary limit comes from file downsampling within the vector model. Subtle layout changes, fine textures, and fine text lines lose definition, causing the program to focus heavily on main color fields and simple silhouettes.
+      The primary limit comes from file downsampling within the vector model. Subtle layout changes, fine textures, and fine text lines lose definition, causing the program to focus heavily on main co[...]
     </div>
 
     <div class="section-title">Sources & References</div>
