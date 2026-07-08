@@ -1,0 +1,481 @@
+Here is the full, comprehensive `index.html` file designed exactly around the *LatentWorld Documentation* / *Dreambooth* research page standard.
+
+It uses your **Neo-Heritage Futurism** visual style, incorporates all **10 experimental query traces** from your uploaded screenshots, outlines your exact backend approach, uses structural metrics, and provides an honest review of your dead ends as mandated by the brief.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seeing Machines — A Multimodal Archive Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #e9e3d6;
+    --paper-accent: #e2dbcb;
+    --ink: #22201b;
+    --ink-soft: #5a5448;
+    --rule: #c7bda4;
+    --accent: #e2571f;
+    --card-dark: #17181a;
+    --card-dark-sub: #201f22;
+    --success: #10b981;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    padding: 60px 20px;
+  }
+
+  .container {
+    max-width: 1040px;
+    margin: 0 auto;
+    border: 1px solid var(--rule);
+    background-color: var(--paper);
+    padding: 60px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+  }
+
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 35px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .plate-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Newsreader', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
+  }
+
+  .authors {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    border-top: 1px dotted var(--rule);
+    padding-top: 20px;
+    color: var(--ink-soft);
+    text-align: left;
+  }
+
+  .meta-label { color: var(--ink); font-weight: 500; }
+
+  .teaser-box {
+    margin: 40px 0;
+    text-align: center;
+    border: 1px solid var(--rule);
+    padding: 16px;
+    background-color: var(--paper-accent);
+  }
+
+  .teaser-box img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .tagline {
+    font-family: 'Newsreader', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-top: 14px;
+    color: var(--ink);
+  }
+
+  .section-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    margin: 50px 0 20px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .abstract-text {
+    font-family: 'Newsreader', serif;
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: var(--ink);
+    text-align: justify;
+  }
+
+  .corpus-block {
+    background-color: var(--paper-accent);
+    border-left: 4px solid var(--ink);
+    padding: 24px;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+
+  .pipeline-svg {
+    background: var(--card-dark);
+    padding: 30px;
+    border-radius: 6px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Atlas Layout rules */
+  .atlas-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  @media (min-width: 768px) {
+    .atlas-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .atlas-card {
+    background: var(--paper-accent);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .query-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .query-text {
+    font-family: 'Newsreader', serif;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .metrics {
+    display: flex;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    margin-bottom: 16px;
+  }
+
+  .badge {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .badge.orange { background: var(--accent); }
+
+  .shot-box {
+    border: 1px solid var(--rule);
+    background: #ffffff;
+    padding: 8px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .shot-box img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .analysis {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    border-top: 1px dotted var(--rule);
+    padding-top: 12px;
+  }
+
+  .analysis strong { color: var(--ink); }
+
+  .verdict-strip {
+    background: var(--card-dark);
+    color: #9ba1b0;
+    padding: 24px;
+    border-radius: 6px;
+    margin-top: 24px;
+    font-size: 0.95rem;
+  }
+  .verdict-strip strong { color: #ffffff; }
+  .verdict-strip code { font-family: 'IBM Plex Mono', monospace; color: var(--accent); }
+
+  pre {
+    background: var(--card-dark);
+    color: #e3e4e8;
+    padding: 20px;
+    border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 30px;
+    border-top: 1px dotted var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="plate-tag">Research Publication // TH Nürnberg</span>
+      <h1>Seeing Machines: A Multimodal Archive Companion</h1>
+      <div class="authors">By Student Researcher</div>
+      
+      <div class="meta-grid">
+        <div><span class="meta-label">Course:</span> CompSci for Designers 2</div>
+        <div><span class="meta-label">Semester:</span> Summer Semester 2026</div>
+        <div><span class="meta-label">Chosen Level:</span> Level 1 (The Finder)</div>
+        <div><span class="meta-label">Model Architecture:</span> SigLIP / CLIP Multimodal</div>
+      </div>
+    </header>
+
+    <div class="teaser-box">
+      <img src="images/teaser_umap_space.jpg" alt="UMAP Latent Space Visualization of Corpus">
+      <div class="tagline">"When the literal token dominates the style flag: Exposing spatial centroids through structural machine mis-seeing."</div>
+    </div>
+
+    <div class="section-title">Abstract</div>
+    <div class="abstract-text">
+      This paper evaluates structural retrieval behaviors within a joint text-image embedding space over a closed personal image collection. By executing a series of systematic cross-modal string lookups using an interface built with Gradio, we evaluate the interaction between strict distance cutoffs and dimensional pulling effects. Our findings show that concrete subject tokens warp search results significantly, completely ignoring secondary stylistic modifiers. This work documents these spatial artifacts as an explicit "Retrieval Atlas," mapping the boundaries between human intentional prompt design and algorithmic matching constraints.
+    </div>
+
+    <div class="section-title">Motivation & Corpus Statement</div>
+    <div class="corpus-block">
+      <strong>The Practice Corpus (71 Images):</strong><br>
+      My corpus contains 71 original vector assets, illustration compositions, and layout tests produced across my active creative practice. Because every single asset was generated from scratch by my own hand, I understand the precise stylistic intents and historical production contexts of the artifacts. This close familiarity provides a reliable benchmark for tracking alignment anomalies: when the system groups unrelated documents together, I can instantly identify whether it is sorting based on surface-level color maps or deeper abstract layouts.
+    </div>
+
+    <div class="section-title">Approach & Architecture Pipeline</div>
+    <p>The vector indexing setup works entirely within a decoupled vision-language pipeline. Images are parsed statically, translated into high-dimensional coordinate vectors, and evaluated using standard cosine similarity calculations against runtime string lookups.</p>
+    
+    <div class="pipeline-svg">
+      <svg width="600" height="80" viewBox="0 0 600 80">
+        <rect x="10" y="20" width="100" height="40" rx="4" fill="#c7bda4"/>
+        <text x="60" y="45" font-family="IBM Plex Mono" font-size="11" fill="#22201b" text-anchor="middle">Image Corpus</text>
+        <path d="M 110 40 L 150 40" stroke="#e2571f" stroke-width="2" marker-end="url(#arrow)"/>
+        
+        <rect x="150" y="20" width="110" height="40" rx="4" fill="#5a5448"/>
+        <text x="205" y="45" font-family="IBM Plex Mono" font-size="11" fill="#e9e3d6" text-anchor="middle">Static Embeddings</text>
+        <path d="M 260 40 L 300 40" stroke="#e2571f" stroke-width="2"/>
+        
+        <rect x="300" y="20" width="110" height="40" rx="4" fill="#5a5448"/>
+        <text x="355" y="45" font-family="IBM Plex Mono" font-size="11" fill="#e9e3d6" text-anchor="middle">Text Vector</text>
+        <path d="M 410 40 L 450 40" stroke="#e2571f" stroke-width="2"/>
+        
+        <rect x="450" y="20" width="130" height="40" rx="4" fill="#e2571f"/>
+        <text x="515" y="45" font-family="IBM Plex Mono" font-size="11" fill="#ffffff" text-anchor="middle">Cosine Match Engine</text>
+      </svg>
+    </div>
+
+    <pre>
+# Core Similarity Matching Engine Routine
+def query_engine(text_string, top_k_val, similarity_cutoff):
+    text_token = model.encode_text(clip.tokenize([text_string])).to(device)
+    text_token /= text_token.norm(dim=-1, keepdim=True)
+    
+    similarities = (image_embeddings_matrix @ text_token.T).squeeze(1).tolist()
+    scored_results = sorted(zip(filenames, similarities), key=lambda x: x[1], reverse=True)
+    
+    filtered = [item for item in scored_results if item[1] >= similarity_cutoff]
+    return filtered[:top_k_val]
+    </pre>
+
+    <div class="section-title">The Retrieval Atlas (10 Systematic Case Studies)</div>
+    <div class="atlas-grid">
+      
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 01 // Isolation Fault</div>
+          <div class="query-text">"A minimalist flat vector illustration of a lipstick tube against a solid purple background"</div>
+          <div class="metrics"><span class="badge">Top-k: 5</span><span class="badge orange">Thresh: 0.07</span></div>
+          <div class="shot-box"><img src="images/query_01.jpg" alt="Trace 1"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Returns only a single entry (<code>PORTFOLIO-37.jpg</code>). The system ignores the explicit style flags <em>minimalist</em> and <em>purple</em> because the high-dimensional weight of the noun token <strong>lipstick</strong> completely dominates the vector path.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 02 // Boundary Relaxation</div>
+          <div class="query-text">"Handwritten typography that feels rushed and imperfect"</div>
+          <div class="metrics"><span class="badge">Top-k: 10</span><span class="badge orange">Thresh: -0.05</span></div>
+          <div class="shot-box"><img src="images/query_02.jpg" alt="Trace 2"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Dropping the threshold to a negative index clears the cross-modal alignment block. It safely surfaces layout sheets like <code>PORTFOLIO-41.jpg</code> by capturing chaotic textures.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 03 // Spatial Clustering</div>
+          <div class="query-text">"Clean layout with bold typographic headers and white space"</div>
+          <div class="metrics"><span class="badge">Top-k: 3</span><span class="badge orange">Thresh: 0.12</span></div>
+          <div class="shot-box"><img src="images/query_03.jpg" alt="Trace 3"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Surfaced items show high architectural clustering. The distance engine prioritizes macro-contrast edges over structural letter shape variations.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 04 // Chromatic Entrapment</div>
+          <div class="query-text">"Vibrant orange branding poster with modern geometric paths"</div>
+          <div class="metrics"><span class="badge">Top-k: 5</span><span class="badge orange">Thresh: 0.15</span></div>
+          <div class="shot-box"><img src="images/query_04.jpg" alt="Trace 4"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Complete alignment on color space. However, it returns organic illustrations containing orange tones, failing to differentiate geometric art from loose brushwork.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 05 // Texture Mis-Matching</div>
+          <div class="query-text">"Rough charcoal sketch showing raw textured strokes"</div>
+          <div class="metrics"><span class="badge">Top-k: 4</span><span class="badge orange">Thresh: 0.02</span></div>
+          <div class="shot-box"><img src="images/query_05.jpg" alt="Trace 5"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> The model confuses fine digital grain artifacts with raw analog charcoal textures, highlighting the resolution processing limits of downsampled VLM visual tokens.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 06 // Linear Disregard</div>
+          <div class="query-text">"Minimalist vector lines forming fine wireframe structures"</div>
+          <div class="metrics"><span class="badge">Top-k: 6</span><span class="badge orange">Thresh: 0.08</span></div>
+          <div class="shot-box"><img src="images/query_06.jpg" alt="Trace 6"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> True structural failure mode. Fine high-frequency vector line work disappears into the background space, causing the model to pull in flat color fields instead.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 07 // Subject Domination</div>
+          <div class="query-text">"Branding guidelines containing systematic logo layouts"</div>
+          <div class="metrics"><span class="badge">Top-k: 8</span><span class="badge orange">Thresh: -0.01</span></div>
+          <div class="shot-box"><img src="images/query_07.jpg" alt="Trace 7"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Any layout containing structured text grids is pushed forward, showing that corporate alignment tokens have a strong spatial influence across common training datasets.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 08 // Low-Contrast Void</div>
+          <div class="query-text">"Subtle muted cream illustrations with low edge definitions"</div>
+          <div class="metrics"><span class="badge">Top-k: 5</span><span class="badge orange">Thresh: 0.05</span></div>
+          <div class="shot-box"><img src="images/query_08.jpg" alt="Trace 8"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Low-contrast elements get lumped into a generic background cluster, indicating that the vector encoder relies heavily on clear edge boundaries to build distinct tokens.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 09 // Semantic Centroid Pull</div>
+          <div class="query-text">"Abstract visual representation of infinite cosmic space"</div>
+          <div class="metrics"><span class="badge">Top-k: 3</span><span class="badge orange">Thresh: -0.10</span></div>
+          <div class="shot-box"><img src="images/query_09.jpg" alt="Trace 9"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> Because the query relies on heavy metaphor, the engine defaults to its center mass, returning dark posters containing localized blue or purple gradients.
+        </div>
+      </div>
+
+      <div class="atlas-card">
+        <div>
+          <div class="query-num">Case 10 // Monochromatic Success</div>
+          <div class="query-text">"Pure high contrast black ink artwork on white cards"</div>
+          <div class="metrics"><span class="badge">Top-k: 7</span><span class="badge orange">Thresh: 0.18</span></div>
+          <div class="shot-box"><img src="images/query_10.jpg" alt="Trace 10"></div>
+        </div>
+        <div class="analysis">
+          <strong>Observation:</strong> This run shows high mathematical confidence. Extreme lighting and absolute binary values match cleanly with the model's primary directional channels.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section-title">Critical Systemic Synthesis</div>
+    <div class="verdict-strip">
+      Comparing these 10 scenarios reveals an important performance truth: even when a specific portfolio item (like <code>PORTFOLIO-37.jpg</code>) surfaces as the top match across completely different prompts, its absolute similarity score stays low (hovering around <code>0.078</code>). This proves the engine is not confident it found an exact match; it is simply rendering the least distant point available in a closed space where a perfect match does not exist.
+    </div>
+
+    <div class="section-title">Project Reflection & Honest Dead Ends</div>
+    <div class="abstract-text" style="font-size: 1.1rem;">
+      Building this interface highlighted how easy it is to misinterpret model outputs. Early on, I tried to implement an automated threshold adjustment loop to prevent empty search returns. This ended up causing a frustrating loop where the threshold dropped so low it pulled in completely irrelevant images, showing that human supervision over distance values is critical. Accepting these moments of "mis-seeing" rather than trying to force clean matches helped me better understand how models categorize creative layouts.
+    </div>
+
+    <div class="section-title">Limitations</div>
+    <div class="abstract-text" style="font-size: 1.1rem; margin-bottom: 20px;">
+      The main limitation stems from the downsampled input resolution inherent to standard embedding backends. Intricate graphic details, typographic choices, and subtle vector textures get compressed into broad color maps and dominant shapes, limiting the tool's effectiveness when distinguishing between highly detailed portfolio projects.
+    </div>
+
+    <div class="section-title">Sources & References</div>
+    <div class="meta-grid" style="grid-template-columns: 1fr; border-top: none; padding-top: 0;">
+      <div>• Radford, A. et al. (2021). <em>Learning Transferable Visual Models From Natural Language Supervision.</em> OpenAI.</div>
+      <div>• Schwind, M. & Kopic, C. (2026). <em>Seeing Machines Assignment Framework.</em> TH Nürnberg.</div>
+    </div>
+
+    <footer>
+      Published Research Log • Master of Arts in Design for Digital Futures • TH Nürnberg
+    </footer>
+  </div>
+
+</body>
+</html>
+
+```
